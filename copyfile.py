@@ -5,17 +5,18 @@ import usb.core
 import usb.util
 
 
-DELAY = 2000
-DEFAULT_DELAY = 100
+DELAY = 1000
+DEFAULT_DELAY = 50
 DESTINATION_KEYBOARD = "ch"
 
 
-if ((len(sys.argv) > 1) and not sys.argv[1]):
-    print "Usage : \"python copyfile.py [source]\""
+if ((len(sys.argv) < 2)):
+    print "Usage : \"python copyfile.py source\""
     sys.exit(1)
 
 if not os.path.isfile(sys.argv[1]):
-    print sys.argv[1] + " not found."
+    print "Error : " + sys.argv[1] + " not found"
+    sys.exit(1)
 
 toEncodePath = "duckyscript"
 if os.path.isfile(toEncodePath):
@@ -31,3 +32,4 @@ fout.close()
 fin.close()
 subprocess.call(['java', '-jar', 'Encoder/encoder.jar', '-i', toEncodePath, '-l', DESTINATION_KEYBOARD])
 os.remove(toEncodePath)
+print "Please copy/overwrite \"inject.bin\" file into the USB Drive, then unplug and replug it."
